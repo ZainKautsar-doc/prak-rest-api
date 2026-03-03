@@ -45,4 +45,19 @@ class Mahasiswa
         $stmt = $this->conn->prepare($query);
         return $stmt->execute([$this->id]);
     }
+
+    public function search($keyword) {
+    $query = "SELECT * FROM {$this->table_name}
+              WHERE nama LIKE ?
+              OR npm LIKE ?
+              OR jurusan LIKE ?
+              ORDER BY id DESC";
+
+    $stmt = $this->conn->prepare($query);
+
+    $keyword = "%{$keyword}%";
+    $stmt->execute([$keyword, $keyword, $keyword]);
+
+    return $stmt;
+}
 }
